@@ -1,0 +1,12 @@
+TODO
+
+*write more complicated tests for Order class
+*write tests for Item class
+*write delete for Item and Order
+*document input, output, expected function for Order and Item methods
+*create class for ItemList---array vs linked lists
+*once I have these things done I will be able to work on command line UI where we get input from
+the command line and create/modify orders and item lists
+*at that point I will need to figure out how to create a database of items and of orders and
+how to interact with that database
+*how to implement class methods (for example in Item class I want a class method to count total # of items)
