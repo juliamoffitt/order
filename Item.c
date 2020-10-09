@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Item.h"
+
 static char* get_name(struct Item *this) {
     if (this->name!='\0') return this->name;
     else return "error";
@@ -47,10 +49,48 @@ void print_item(struct Item *this) {
     printf("Total price for item is %d\n", total_price(this));
 }
 
-static struct Item new(char* name, int price, int quantity) {
-    return (struct Item){.name=name, .price=price, .quantity=quantity, .get_name=&get_name,
-                        .get_price=&get_price, .get_quantity=&get_quantity, .change_name=&change_name,
-                        .change_price=&change_price, .change_quantity=&change_quantity,
-                        .add_quantity=add_quantity, .total_price=&total_price, .print_item=&print_item};
+struct Item* create_item(char* name, int price, int quantity) {
+    struct Item* new_item = malloc(sizeof(Item));
+    if (!new_item) return NULL;
+    
+    new_item->name = name;
+    new_item->price = price;
+    new_item->quantity = quantity;
+    new_item->next = NULL;
+    return new_item;
+}
+void free_item(struct Item *this){
+    free(this);
+    this = NULL;
+}
+struct Item* get_next(struct Item* this){
+    if (this->next == NULL) return NULL;
+    else return this->next;
+}
+int is_item(struct Item* this, char* name){ //returns 0 for no and 1 for yes, 
+    if (name == this->name) return 1;
+    else return 0;
+}
+
+
+static struct Item new(char* name, int price, int quantity, struct Item* next) {
+    return (struct Item){.name=name,
+                         .price=price,
+                         .quantity=quantity,
+                         .next=next,
+                         .get_name=&get_name,
+                         .get_price=&get_price,
+                         .get_quantity=&get_quantity,
+                         .change_name=&change_name,
+                         .change_price=&change_price,
+                         .change_quantity=&change_quantity,
+                         .add_quantity=add_quantity,
+                         .total_price=&total_price,
+                         .print_item=&print_item,
+                         .create_item=&create_item,
+                         .free_item=&free_item,
+                         .get_next=&get_next,
+                         .is_item=&is_item
+    };
 }
 const struct ItemClass Item={.new=&new};
