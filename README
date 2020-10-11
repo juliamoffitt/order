@@ -1,8 +1,20 @@
 README
 
-ORDR
-Trck yr ordrs with ordr.
+ .--.         .     
+:    :        |     
+|    |.--. .-.| .--.
+:    ;|   (   | |   
+ `--' '    `-'`-'   
+                    
+(ascii art by patorjk.cm, font: swan)
 
+
+ORDR
+Trck yr ordrs wth ordr.
+"The Netflix of tracking your orders" --someone, probably
+On New York Times Best Sellers Book List
+'"Do you think a depressed person could make this?' -- Ben Wyatt, Parks and Recreation" --Me
+Blockchain
 
 The Rationale
 I currently work at an ophthalmology clinic and, like every other medical provider at this time, we struggle to keep an adeqaute supply of medical supplies and PPE. My best friend is tasked with finding companies to order from, placing ample orders, keeping track of these orderes, and distributing supplies to our 11 offices. While she uses printed documents/spreadsheets and carbon copies of her purchase orders (organized neatly in ~several~ binders) I believe we can further streamline this process. This is my attempt to make her life easier.
@@ -13,7 +25,14 @@ This project creates, tracks, and stores orders and their status from the comman
 Technologies
 C (because I hate myself) and in the future a SQL database. I will likey use GTK for creating the GUI though I will research my options more thoroughly after I have made headway with implementing the database.
 
-One key component of an order is the list of items in the order. I have considered using an array vs. a linked list to store the items. I have decided to use a linked list as I anticipated needing to expand/shorten the list at will. Viewing a particular item on the list (and the time it takes to walk the list to find such item) is not a priority at this point. Furthermore I do not think lists will be more than 100 items long so walking the linked list will not take long due to the demands/constraints of this project. If, when I get to the point of displaying information with SQL queries, the linked list is not sufficient then I will switch to using arrays. I believe this transition will be easier than going from array->linked list.
+Initially I considered using an array but valued expanding the list at will over speed of searching items.
+    
+                  Search   Insert/Delete(beginning/end)  Insert/Delete(middle)
+    Linked List    O(n)     O(1)                          O(n)
+    Array          O(n)     O(n)                          O(n)
+    
+    * Note insertion for array is based on having to allocate memory for larger array and copy data into new array
+    * I considered the various implementations of a linked list (circular and doubly linked) and opted for a singly linked list for ease of implementation. 
 
 Problems
 1. I do not have experience using a database with another programming language. In my database class we worked only with files of SQL queries. I anticipate challenges setting up the database, implementing it with C, and writing complex queries to display information.
@@ -22,3 +41,9 @@ Problems
 
 Installation
 Don't install at this time, nothing much to look at yet.
+
+What I've Learned (so far)
+* static vs. nonstatic methods
+* public vs. private fields and methods--DNE in C :(
+* implementing OOP in C
+* 

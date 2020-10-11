@@ -7,7 +7,7 @@
     
     Fields: char* name, int price, int quantity, Item* next
     Functions:
-        Item* create_item(char* name, int price, int quantity)
+        static Item* create_item(char* name, int price, int quantity)
         void free_item(struct Item *this)
         Item* get_next(struct Item* this)
         int is_item(struct Item* this, char* name)
@@ -68,7 +68,7 @@
  * Parameters: name, price, quantity
  * Returns: pointer to Item
 */
-struct Item* create_item(char* name, int price, int quantity) {
+static struct Item* create_item(char* name, int price, int quantity) {
     struct Item* new_item = malloc(sizeof(Item));
     if (!new_item) return NULL;
     
@@ -86,6 +86,7 @@ struct Item* create_item(char* name, int price, int quantity) {
  * Comments: Not sure this is strictly necessary, will keep for now just incase
 */
 void free_item(struct Item *this){
+    if (this == NULL) return;
     free(this);
     this = NULL;
 }
@@ -121,8 +122,8 @@ void print_item(struct Item *this) {
     printf("Name: %s\n", this->name);
     printf("Price: %d\n", this->price);
     printf("Quantity: %d\n", this->quantity);
-    if(this->next == NULL) printf("There is no next item\n");
-    else printf("Next item is: %s\n", this->next->name);
+    if(this->next == NULL) printf("There is no next item\n\n");
+    else printf("Next item is: %s\n\n", this->next->name);
 }
 
 

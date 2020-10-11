@@ -4,14 +4,16 @@ typedef struct ItemList list;
 
 struct ItemList {  
     struct Item* head;
-    int count;
+    int unique_items;
+    int total_items;
     
     //update item in list --> not sure about this, will implement later
     //sort list --> will also do this later
     
-    struct ItemList* (*new_list)();
+    static struct ItemList* (*new_list)();
     void (*delete_list)(struct ItemList* this);
-    void (*add_item)(struct ItemList* this, Item* new_item);
+    void (*append_item)(struct ItemList* this, Item* new_item);
+    void (*add_item)(struct ItemList* this, char* name, int price, int quantity);
     void (*remove_item)(struct ItemList* this, char* name);
     struct Item* (*get_item)(struct ItemList* this, char* name);
     struct Item* (*get_last)(struct ItemList* this);

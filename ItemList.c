@@ -7,7 +7,7 @@
     
     Fields: Item* head, int count
     Functions:
-        ItemList* new_list()
+        static ItemList* new_list()
         void delete_list(struct ItemList* this)
         void add_item(struct ItemList* this, Item* new_item)
         void remove_item(struct ItemList* this, char* name)
@@ -16,15 +16,6 @@
         void print_list(struct ItemList* this)
         
     * ItemList is a singly linked list to store Items.
-    * Initially I considered using an array but valued expanding the list at will over speed of searching items.
-    
-                  Search   Insert/Delete(beginning/end)  Insert/Delete(middle)
-    Linked List    O(n)     O(1)                          O(n)
-    Array          O(n)     O(n)                          O(n)
-    
-    * Note insertion for array is based on having to allocate memory for larger array and copy data into new array
-    
-    * I considered the various implementations of a linked list (circular and doubly linked) and opted for a singly linked list for ease of implementation. 
 */
 
 
@@ -33,7 +24,7 @@
  * Parameters: none
  * Returns: pointer to new list
 */
-ItemList* new_list(){
+static ItemList* new_list(){
     struct ItemList* new_list = malloc(sizeof(ItemList));
     if(!new_list) return NULL;
     
@@ -67,16 +58,31 @@ void delete_list(struct ItemList* this){
 }
 
 /*
- * Adds existing item to list
+ * Adds existing item to end of list
  * Parameters: ItemList
  * Returns: void
+ * Note: assumes duplicate item has already been checked,
 */
-void add_item(struct ItemList* this, Item* new_item){
-    struct Item* curr = this->head;
-    while(curr->next != NULL){
-        curr = curr->next;
-    }
-    curr->next = new_item;
+void append_item(struct ItemList* this, Item* new_item){
+    if (this == NULL || new_item == NULL) return;
+    struct Item* last = get_last(this);
+    last->next = new_item;
+}
+
+/*
+ * Checks if item exists in list
+ *   if exists update existing item
+ *   else creates new item and appends to list
+ * Parameters: ItemList, name (of item)
+ * Returns: void
+ * Note: PUBLIC
+ */
+void add_item(struct ItemList* this, char* name, int price, int quantity) {
+    if (this == NULL || name = '\0' || quantity == 0) return;
+    
+    Item* temp = get_item(this, name);
+    if(temp == NULL) temp = create_item(name, price, quantity);
+    else temp->quantity = quantity + temp->quantity;
 }
 
 /*
@@ -114,7 +120,7 @@ void remove_item(struct ItemList* this, char* name){
 Item* get_item(struct ItemList* this, char* name){
     Item* curr = this->head;
     while (curr->next != NULL){
-        if (curr->name == name) return curr;
+        if (is_item(name) == name) return curr;
         else curr = curr->next;
     }
     return NULL;
@@ -140,9 +146,16 @@ Item* get_last(struct ItemList* this) {
  * Returns: void
 */
 void print_list(struct ItemList* this) {
-    
+    if(this == NULL) {
+        printf("Error: list is empty");
+        return;
+    }
+    struct Item* temp = this->head;
+    while(this->next != NULL) {
+        print_item(this->next);
+        this = this->next;
+    }
 }
-
 
 static struct ItemList new(Item* head, int count) {
     return (struct ItemList){
@@ -150,7 +163,8 @@ static struct ItemList new(Item* head, int count) {
         .count=count,
         .new_list=&new_list,
         .delete_list=&delete_list,
-        .add_item=&add_item,
+        .append_item=&append_item,
+        .add_item=&add_item
         .remove_item=&remove_item,
         .get_item=&get_item,
         .get_last=&get_last,

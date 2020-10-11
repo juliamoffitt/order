@@ -1,54 +1,10 @@
 Notes
 
-General
-* malloc vs object constructor--how to use?
-
 for README
 * add linked list vs array discussion (remove from ItemList.c)
 
 
-for Item/ItemList
-// add check to make sure no item of same name exists already
-// if it already exists increase quantity of existing item by one
-// returns void
-// what is the flow to make a new list and new item
-// create new list
-// create item based on name,price, quantity
-// add existing item to list
-// this means if there is already an item with same name we will waste
-//    space/time by creating new item, then updating existing item, then deleting new item
-// when do we check for existing items??
-
-
-
 for Item and Order
 * Extra functions may need to be reworked or removed
-
-
-
-for ItemList
-* need to update add_item and remove_item
-
-Item/List/Order Creation flow
-
-Would you like to create a new order? Y
--Create order, initalize fields
--Create (empty) list (and intialize fields)
-
-Would you like to add items? Y
-- user gives name, price, and quantity (will ignore price for now)
-- search list for existing item
-- if exists update quantity of existing item
-- if doesn't exist create new item
-
-
-
-Update order/list/item flow
-
-Would you like to update an order? Y/N
-- yes--udpdate fields, delete order, update list
-Would you like to edit a list? Y/N
-- add, remove items, update item price/quantity
-
 
 
