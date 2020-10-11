@@ -15,6 +15,7 @@ struct ItemList {
     void (*remove_item)(struct ItemList* this, char* name);
     struct Item* (*get_item)(struct ItemList* this, char* name);
     struct Item* (*get_last)(struct ItemList* this);
+    void (*print_list)(struct ItemList* this);
     
 };
 extern const struct ItemClass {
