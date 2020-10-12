@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Order.h"
+#include "ItemList.h"
 
 
 /*
@@ -50,7 +51,7 @@
  * Parameters: vendor, PO
  * Returns: pointer to Order
 */
-static struct Order* new_order(char* vendor, int PO) { //need to add part where we actually make the list
+struct Order* new_order(char* vendor, int PO) { //need to add part where we actually make the list
     struct Order* new_order = malloc(sizeof(Order));
     if(!new_order) return NULL;
     new_order->vendor = vendor;
@@ -65,7 +66,8 @@ static struct Order* new_order(char* vendor, int PO) { //need to add part where 
  * Returns: void
 */
 void delete_order(struct Order *this) {
-    delete_list(this->list);
+    struct ItemList* test = this->list;
+    test->delete_list(test);
     free(this);
     this = NULL;
 }
@@ -79,7 +81,7 @@ void delete_order(struct Order *this) {
 void print_order(struct Order *this) {
     printf("Vendor is %s\n", this->vendor);
     printf("PO # is %d\n", this->PO);
-    (get_status(this)) ? (printf("Status is open\n")) : (printf("Status is closed\n"));
+    //(get_status(this)) ? (printf("Status is open\n")) : (printf("Status is closed\n"));
 }
 
 

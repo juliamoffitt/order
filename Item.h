@@ -19,7 +19,7 @@ struct Item {
 //    int (*add_quantity)(struct Item *this, int add_quantity);
 //    int (*total_price)(struct Item *this);
     
-    static struct Item* (*create_item)(char* name, int price, int quantity);
+    struct Item* (*create_item)(char* name, int price, int quantity);
     void (*free_item)(struct Item *this);
     struct Item* (*get_next)(struct Item* this);
     int (*is_item)(struct Item* this, char* name); //returns 0 for no and 1 for yes

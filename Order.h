@@ -16,11 +16,11 @@ struct Order {
 //    int (*change_vendor)(struct Order *this, char* new_vendor);
 //    int (*change_PO)(struct Order *this, int new_PO);
     
-    static struct Order* (*new_order)(char* vendor, int PO);
+    struct Order* (*new_order)(char* vendor, int PO);
     void (*delete_order)(struct Order *this);
     void (*print_order)(struct Order *this);
     
 };
 extern const struct OrderClass {
-    struct Order (*new)(char* vendor, int PO);
+    struct Order (*new)(char* vendor, int PO, int open, struct ItemList* list);
 } Order;

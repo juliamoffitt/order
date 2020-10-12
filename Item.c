@@ -68,7 +68,7 @@
  * Parameters: name, price, quantity
  * Returns: pointer to Item
 */
-static struct Item* create_item(char* name, int price, int quantity) {
+struct Item* create_item(char* name, int price, int quantity) {
     struct Item* new_item = malloc(sizeof(Item));
     if (!new_item) return NULL;
     

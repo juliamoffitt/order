@@ -24,7 +24,7 @@
  * Parameters: none
  * Returns: pointer to new list
 */
-static ItemList* new_list(){
+struct ItemList* new_list(){
     struct ItemList* new_list = malloc(sizeof(ItemList));
     if(!new_list) return NULL;
     
@@ -39,14 +39,17 @@ static ItemList* new_list(){
  * Returns: void
 */
 void delete_list(struct ItemList* this){
-    Item* hd, curr;
+    struct Item* hd;
+    struct Item* curr;
     if (this->head == NULL){ //if there are no items in list
         free(this);
         this = NULL;
         return;
     }
     
-    while (hd->next != NULL) {
+    hd=this->head;
+    curr = hd->next;
+    while (curr != NULL) {
         hd = curr->next;
         free(curr);
         curr = hd->next;
@@ -63,7 +66,7 @@ void delete_list(struct ItemList* this){
  * Returns: void
  * Note: assumes duplicate item has already been checked,
 */
-void append_item(struct ItemList* this, Item* new_item){
+void append_item(struct ItemList* this, struct Item* new_item){
     if (this == NULL || new_item == NULL) return;
     struct Item* last = get_last(this);
     last->next = new_item;
@@ -78,9 +81,9 @@ void append_item(struct ItemList* this, Item* new_item){
  * Note: PUBLIC
  */
 void add_item(struct ItemList* this, char* name, int price, int quantity) {
-    if (this == NULL || name = '\0' || quantity == 0) return;
+    if (this == NULL || name == '\0' || quantity == 0) return;
     
-    Item* temp = get_item(this, name);
+    struct Item* temp = get_item(this, name);
     if(temp == NULL) temp = create_item(name, price, quantity);
     else temp->quantity = quantity + temp->quantity;
 }
@@ -91,7 +94,8 @@ void add_item(struct ItemList* this, char* name, int price, int quantity) {
  * Returns: void
 */
 void remove_item(struct ItemList* this, char* name){
-    Item* prev, curr;
+    struct Item* prev;
+    struct Item* curr;
     prev = this->head;
     curr = prev->next;
     
@@ -117,8 +121,8 @@ void remove_item(struct ItemList* this, char* name){
  * Parameters: ItemList, name of item
  * Returns: Pointer to item in question
 */
-Item* get_item(struct ItemList* this, char* name){
-    Item* curr = this->head;
+struct Item* get_item(struct ItemList* this, char* name){
+    struct Item* curr = this->head;
     while (curr->next != NULL){
         if (is_item(name) == name) return curr;
         else curr = curr->next;
@@ -131,9 +135,9 @@ Item* get_item(struct ItemList* this, char* name){
  * Parameters: ItemList
  * Returns: Pointer to last item in list
 */
-Item* get_last(struct ItemList* this) {
+struct Item* get_last(struct ItemList* this) {
     if(this->next == NULL) return NULL;
-    Item* curr = this;
+    struct Item* curr = this;
     while(curr->next != NULL) {
         curr = curr->next;
     }
@@ -157,18 +161,18 @@ void print_list(struct ItemList* this) {
     }
 }
 
-static struct ItemList new(Item* head, int count) {
+static struct ItemList new(struct Item* head, int count) {
     return (struct ItemList){
         .head=head,
         .count=count,
         .new_list=&new_list,
         .delete_list=&delete_list,
         .append_item=&append_item,
-        .add_item=&add_item
+        .add_item=&add_item,
         .remove_item=&remove_item,
         .get_item=&get_item,
         .get_last=&get_last,
         .print_list=&print_list
     };
 }
-const struct ItemListClass ItemList={.new=&new}
+const struct ItemListClass ItemList={.new=&new};
